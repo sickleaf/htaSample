@@ -1,0 +1,71 @@
+<html>
+<head>
+  <title>hta demo</title>
+    <HTA:APPLICATION ID="oHTA"
+     applicationname="myapp"
+     border="dialog"
+     borderstyle="complex"
+     caption="yes"
+     icon=""
+     maximizebutton="no"
+     minimizebutton="no"
+     showintaskbar="yes"
+     singleinstance="yes"
+     sysmenu="yes"
+     version="1.0"
+     windowstate="normal" />
+
+  <script>
+
+        var data = new ActiveXObject("WScript.Shell");
+  function window.onload()
+  {
+     sTempstr = "applicationname  = " + oHTA.applicationname + "\n" +
+                "border           = " + oHTA.border          + "\n" +
+                "borderstyle      = " + oHTA.borderstyle     + "\n" +
+                "caption          = " + oHTA.caption         + "\n" +
+                "commandline      = " + oHTA.commandline     + "\n" +
+                "icon             = " + oHTA.icon            + "\n" +
+                "maximizebutton   = " + oHTA.maximizebutton  + "\n" +
+                "minimizebutton   = " + oHTA.minimizebutton  + "\n" +
+                "showintaskbar    = " + oHTA.showintaskbar   + "\n" +
+                "singleinstance   = " + oHTA.singleinstance  + "\n" +
+                "sysmenu          = " + oHTA.sysmenu         + "\n" +
+                "version          = " + oHTA.version         + "\n" +
+                "windowstate      = " + oHTA.windowstate     + "\n" ;
+
+     opre.innerText = sTempstr;
+     searchlink.innerText = "https://www.google.co.jp/";
+  };
+
+  function window.runAutoCMD()
+  {
+        data.Run("C:\Users\sickleaf\Documents\teraterm-4.99\CENTOS_AUTOCMD.ttl");
+  }
+
+
+  </script>
+        <script language="VBScript">
+        Sub teraterm()
+                CreateObject("WScript.Shell").Run "C:\Users\sickleaf\Documents\teraterm-4.99\CENTOS_AUTOCMD.ttl"
+        End Sub
+        </script>
+
+  <style>
+  div {
+          font-family: meiryo;
+  }
+
+  #winclose {
+          font-family: meiryo;
+  }
+  </style>
+</head>
+<body scroll="yes">
+  <pre id=opre>  </pre>
+  <div id=searchlink></div>
+  <input type="button" value="closeWD" id="winclose" onclick="window.close()">
+
+  <input type="button" value="autoCMD" id="autocmd" onclick="teraterm()">
+</body>
+</html>
