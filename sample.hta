@@ -1,71 +1,104 @@
 <html>
 <head>
   <title>hta demo</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" Content="IE=10">
+
+  <script>
+  </script>
+
     <HTA:APPLICATION ID="oHTA"
      applicationname="myapp"
      border="dialog"
      borderstyle="complex"
      caption="yes"
+     contextmenu="yes"
      icon=""
      maximizebutton="no"
      minimizebutton="no"
      showintaskbar="yes"
-     singleinstance="yes"
+     singleinstance="no"
      sysmenu="yes"
      version="1.0"
      windowstate="normal" />
 
-  <script>
+  <script type="text/javascript">
 
-        var data = new ActiveXObject("WScript.Shell");
-  function window.onload()
-  {
-     sTempstr = "applicationname  = " + oHTA.applicationname + "\n" +
-                "border           = " + oHTA.border          + "\n" +
-                "borderstyle      = " + oHTA.borderstyle     + "\n" +
-                "caption          = " + oHTA.caption         + "\n" +
-                "commandline      = " + oHTA.commandline     + "\n" +
-                "icon             = " + oHTA.icon            + "\n" +
-                "maximizebutton   = " + oHTA.maximizebutton  + "\n" +
-                "minimizebutton   = " + oHTA.minimizebutton  + "\n" +
-                "showintaskbar    = " + oHTA.showintaskbar   + "\n" +
-                "singleinstance   = " + oHTA.singleinstance  + "\n" +
-                "sysmenu          = " + oHTA.sysmenu         + "\n" +
-                "version          = " + oHTA.version         + "\n" +
-                "windowstate      = " + oHTA.windowstate     + "\n" ;
-
-     opre.innerText = sTempstr;
-     searchlink.innerText = "https://www.google.co.jp/";
-  };
-
-  function window.runAutoCMD()
-  {
-        data.Run("C:\Users\sickleaf\Documents\teraterm-4.99\CENTOS_AUTOCMD.ttl");
+  function refresh(htaPath){
+    var fso = new ActiveXObject("Scripting.FileSystemObject");
+    var appUri = fso.GetParentFolderName(location.href);
+    var appPath = appUri.substr("file:///".length).split("/").join("\\");
+    var fileName = fso.GetFileName(location.href);
+    htaFull = appPath+"\\"+fileName
+    WS = new ActiveXObject("WScript.Shell");
+    var wsresult= WS.Run(htaFull,1,false);
   }
-
 
   </script>
+ 
         <script language="VBScript">
-        Sub teraterm()
-                CreateObject("WScript.Shell").Run "C:\Users\sickleaf\Documents\teraterm-4.99\CENTOS_AUTOCMD.ttl"
+        Sub notepad()
+                CreateObject("WScript.Shell").Run "notepad"
         End Sub
+
+        Sub shutdown()
+                CreateObject("WScript.Shell").Run "cmd /c shutdown /s /t 30"
+        End Sub
+
         </script>
 
+
   <style>
-  div {
-          font-family: meiryo;
+
+  .col3 {
+    display: flex;
   }
 
-  #winclose {
-          font-family: meiryo;
+   .col3 li{
+    width: 33.3333%;
+    width: calc(100% / 3);
   }
+
+  ul,li{
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style: none;
+  }
+
+  li{
+    background: #cca;
+    text-align: center;
+    padding: 10px 0;
+    border: 1px #fff;
+  }
+
   </style>
 </head>
 <body scroll="yes">
-  <pre id=opre>  </pre>
-  <div id=searchlink></div>
-  <input type="button" value="closeWD" id="winclose" onclick="window.close()">
 
-  <input type="button" value="autoCMD" id="autocmd" onclick="teraterm()">
+  <pre id=opre>  </pre>
+  <ul class="col3">
+
+  <div id="searchlink"></div>
+    <li>
+    <input type="button" style="largeButton" value="close" id="wincloseB" onclick="window.close()">
+      <br>
+    <input type="button" style="largeButton" value="refresh" id="refreshB" onclick="refresh();window.close()">
+    </li>
+
+    <li>
+    <input type="button" value="notepad" id="notepadB" onclick="notepad()">
+
+    </li>
+
+
+    <li>
+    <input type="textbox" value="" id="shutdownMin" >
+
+    <input type="button" value="shutdown" id="shutdownB" onclick="shutdown()">
+    </li>
+
+  </ul>
 </body>
 </html>
